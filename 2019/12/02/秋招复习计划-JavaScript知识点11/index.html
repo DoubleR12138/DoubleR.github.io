@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Double--R" />
+
+
+
+<meta name="description" content="前言 基本类型与引用类型转换中的装箱和拆箱操作，BOM属性对象方法，JS的map()和reduce()方法，JavaScript中的arguments">
+<meta property="og:type" content="article">
+<meta property="og:title" content="秋招复习计划-JavaScript知识点11">
+<meta property="og:url" content="http://doubler.cn/2019/12/02/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B911/index.html">
+<meta property="og:site_name" content="DoubleR&#39;s BLOG">
+<meta property="og:description" content="前言 基本类型与引用类型转换中的装箱和拆箱操作，BOM属性对象方法，JS的map()和reduce()方法，JavaScript中的arguments">
+<meta property="og:locale">
+<meta property="og:image" content="http://doubler.cn/2019/12/02/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B911/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B911/41.jpg">
+<meta property="og:image" content="http://doubler.cn/2019/12/02/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B911/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B911/%E9%9A%90%E5%BC%8F%E8%A3%85%E7%AE%B11.png">
+<meta property="og:image" content="http://doubler.cn/2019/12/02/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B911/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B911/reduce1.png">
+<meta property="og:image" content="http://doubler.cn/2019/12/02/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B911/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B911/reduce2.png">
+<meta property="article:published_time" content="2019-12-02T12:45:06.000Z">
+<meta property="article:modified_time" content="2019-12-05T14:33:55.644Z">
+<meta property="article:author" content="Double--R">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://doubler.cn/2019/12/02/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B911/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B911/41.jpg">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="DoubleR&#39;s BLOG" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>秋招复习计划-JavaScript知识点11 | DoubleR&#39;s BLOG</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: false
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/13.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/"></a></h1>
+        </hgroup>
+
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                            <li><a href="/pdf/">资料</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:1036460042@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" rel="noopener" href="https://github.com/doubler12138" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ECMAScript6/" rel="tag">ECMAScript6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92/" rel="tag">复习计划</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%8B%E5%86%99%E4%BB%A3%E7%A0%81/" rel="tag">手写代码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%8B%E5%86%99%E7%AD%BE%E5%90%8D/" rel="tag">手写签名</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag">浏览器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BB%83%E4%B9%A0%E9%A2%98/" rel="tag">练习题</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag">计算机网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%8E%86/" rel="tag">面试经历</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%AB%98%E5%BE%B7%E5%9C%B0%E5%9B%BE/" rel="tag">高德地图</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://zzzwyyy.github.io/">小仙女的博客</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://github.com/doubler12138">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://fofa.so/">Fofa</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://www.anquanke.com/">安全客</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://vulhub.org/">Vulhub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://www.vulnhub.com/">Vulnhub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://wx.zsxq.com/">知识星球</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://paper.seebug.org/">SeeBug</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://www.sec-wiki.com/news">SecWiki</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://kingfast.top/">KingFast</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://seclists.org/oss-sec/">SecList</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://www.jarvisoj.com/login">JarvisOJ</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://f1sh.site/">Fish</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://www.k0rz3n.com/">K0rz3n</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://pupiles.com/">Pupiles</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://ox1234.github.io/">Flight</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://wyb0.com/">Reber</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://codeqi.top/">Qiqi</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://quincyblog.top/">Quincy</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://blog.void0red.top/">Void0red</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://yulige.top/">郁离歌</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://www.leavesongs.com/">离别歌</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://www.linkedbyx.com/home">Linked by X</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://chujian521.github.io/">Xin</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于学习</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页"></a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/13.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页"></a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                    <li><a href="/pdf/">资料</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:1036460042@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/doubler12138" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="new-秋招复习计划-JavaScript知识点11" class="article article-type-new" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/12/02/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B911/" class="article-date">
+      <time datetime="2019-12-02T12:45:06.000Z" itemprop="datePublished">2019-12-02</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      秋招复习计划-JavaScript知识点11
+    </h1>
+  
+
+		<div style="margin-top:20px;">
+	<span class="post-time">
+		<span class="post-meta-item-icon">
+			<i class="fa fa-keyboard-o"></i>
+			<span class="post-meta-item-text"> 字数统计: </span>
+			<span class="post-count">3.4k字</span>
+		</span>
+	</span>
+	
+	<span class="post-time">
+		&nbsp; | &nbsp;
+		<span class="post-meta-item-icon">
+			<i class="fa fa-hourglass-half"></i>
+			<span class="post-meta-item-text"> 阅读时长: </span>
+			<span class="post-count">13分</span>
+		</span>
+	</span>
+</div>
+
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92/">复习计划</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud" style="margin-top:30px;">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p><strong>前言</strong></p>
+<p>基本类型与引用类型转换中的装箱和拆箱操作，BOM属性对象方法，JS的map()和reduce()方法，JavaScript中的arguments</p>
+<hr>
+<p><img src="%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B911/41.jpg" alt="41"></p>
+<span id="more"></span>
+
+<div align="center">
+    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1349960604&auto=1&height=66"></iframe>
+</div>
+
+<h2 id="基本类型与引用类型转换中的装箱和拆箱操作"><a href="#基本类型与引用类型转换中的装箱和拆箱操作" class="headerlink" title="基本类型与引用类型转换中的装箱和拆箱操作"></a>基本类型与引用类型转换中的装箱和拆箱操作</h2><p><strong>装箱：</strong>指将基本数据类型转换为对应的引用类型操作。装箱又分为<code>隐式装箱</code>和<code>显示装箱</code></p>
+<p><strong>拆箱：</strong>指将引用类型转换回基本的数据类型</p>
+<h3 id="隐式装箱"><a href="#隐式装箱" class="headerlink" title="隐式装箱"></a>隐式装箱</h3><p>对于隐式装箱，我们先看个例子</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> s1 = <span class="string">&quot;test&quot;</span>;</span><br><span class="line"><span class="keyword">let</span> s2 = s1.substring(<span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+
+<p>在<code>s1.substring(2)</code>这一段代码执行的过程中，其实发生了很多步骤</p>
+<ul>
+<li>基于s1创建一个String类型的实例</li>
+<li>在实例中调用substring方法</li>
+<li>销毁这个实例</li>
+</ul>
+<p>隐式装箱在读取一个基本类型值时，后台会创建一个该基本类型所对应的基本包装类型对象。在这个基本类型的对象上调用方法。这个基本类型的对象是临时的，它只存在于方法调用的那一行代码执行的瞬间，执行方法后立即本销毁。这也是在基本类型上添加属性和方法会不识别或报错的原因了。在添加属性和方法的代码执行的时候的确创建了一个基本包装类型的对象，所以添加的过程是没有问题的。但是添加完毕后，对象就被销毁了，所以后续的访问和调用就会报错。</p>
+<p><strong>衍生问题：</strong></p>
+<p>在研究隐式装箱的时候，我发现一个衍生的问题，就是数字在隐式装箱的时候会存在报错的现象。比如：</p>
+<p><img src="%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B911/%E9%9A%90%E5%BC%8F%E8%A3%85%E7%AE%B11.png" alt="隐式装箱1"></p>
+<p>研究了一下，发现，这是JS引擎无法正确解析这里的点符号导致的。因为这里的点符号既可以理解为点运算符，是对对象方法或属性的访问。也可以理解为浮点数。</p>
+<p>针对这个问题我们可以做出点调整，方法有很多</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>.toString()    </span><br><span class="line"><span class="comment">//成功，运算结果&quot;1&quot; 解析: 第二个点被视为点运算符，前面的是浮点数。</span></span><br><span class="line"><span class="number">1.0</span>.toString()   </span><br><span class="line"><span class="comment">//成功，运算结果&quot;1&quot; 解析: 第二个点被视为点运算符，前面的是浮点数。</span></span><br><span class="line"><span class="number">1</span> .toString()    </span><br><span class="line"><span class="comment">//成功，运算结果&quot;1&quot; 解析: 用空格和后面的.toString()隔开, 把前面的当成运算式处理</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="显示装箱"><a href="#显示装箱" class="headerlink" title="显示装箱"></a>显示装箱</h3><p>显示装箱就很好理解了，就是通过基本包装类型对象对基本类型进行装箱</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> name = <span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">&#x27;test&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>显示装箱的操作可以对new出来的对象进行属性和方法的添加了，因为通过new操作符创建的引用类型的实例，在执行流离开当前作用域之前一直保留在内存中。</p>
+<h3 id="拆箱操作"><a href="#拆箱操作" class="headerlink" title="拆箱操作"></a>拆箱操作</h3><p>拆箱操作通常通过引用类型的<code>valueOf()</code>和<code>toString()</code>方法来实现</p>
+<p>不过需要注意valueOf和toStirng的区别</p>
+<p><strong>toString：</strong>将值转换为字符串形式并返回，不同类型的toString方法各有不同</p>
+<p><strong>valueOf：</strong>返回对象的原始值</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> objNum = <span class="keyword">new</span> <span class="built_in">Number</span>(<span class="number">64</span>);</span><br><span class="line"><span class="keyword">let</span> objStr = <span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">&#x27;64&#x27;</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> objNum); <span class="comment">// object</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> objStr); <span class="comment">// object</span></span><br><span class="line"># 拆箱</span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> objNum.valueOf()); <span class="comment">// number 基本的数字类型，想要的</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> objNum.toString()); <span class="comment">// string 基本的字符类型，不想要的</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> objStr.valueOf()); <span class="comment">// string 基本的数据类型，不想要的</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> objStr.toString()); <span class="comment">// string 基本的数据类型，想要的</span></span><br></pre></td></tr></table></figure>
+
+<p>还有一个值得注意的点，就是当一个对象同时定义了valueOf方法和toString方法，那么先执行哪个的问题。如果存在Symbol.toPrimitive()方法，这个是最优先的。然后对于不同的情况，valueOf和toString有不同的先后顺序</p>
+<p><strong>直接输出对象名：</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> obj = &#123;</span><br><span class="line">    <span class="attr">valueOf</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;调用了 obj.valueOf&#x27;</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;valueOf&#x27;</span>;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">toString</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;调用了 obj.toString&#x27;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;toString&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">alert(obj);</span><br><span class="line"><span class="comment">// 调用了 obj.toString</span></span><br><span class="line"><span class="comment">// 弹出toString</span></span><br></pre></td></tr></table></figure>
+
+<p>执行tostring()</p>
+<p>如果toString返回一个对象呢</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    <span class="attr">toString</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;调用了 obj.toString&#x27;</span>);</span><br><span class="line">        <span class="keyword">return</span> &#123;&#125;;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">valueOf</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;调用了 obj.valueOf&#x27;</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;1&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">alert(obj);</span><br><span class="line"><span class="comment">// 调用了 obj.toString</span></span><br><span class="line"><span class="comment">// 调用了 obj.valueOf</span></span><br><span class="line"><span class="comment">// 弹出1</span></span><br></pre></td></tr></table></figure>
+
+<p>先toString，后valueOf</p>
+<p><strong>对象参与运算：</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> obj = &#123;</span><br><span class="line">    <span class="attr">toString</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;调用了 obj.toString&#x27;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">valueOf</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;调用了 obj.valueOf&#x27;</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">obj + <span class="number">1</span>; </span><br><span class="line"><span class="comment">//调用了 obj.valueOf</span></span><br><span class="line"><span class="comment">//3</span></span><br></pre></td></tr></table></figure>
+
+<p>执行valueOf()</p>
+<p>而如果valueOf返回一个对象呢</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    <span class="attr">valueOf</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;调用 valueOf&#x27;</span>);</span><br><span class="line">        <span class="keyword">return</span> &#123;&#125;;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">toString</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;调用 toString&#x27;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">10</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(obj + <span class="number">1</span>);</span><br><span class="line"><span class="comment">//调用 valueOf</span></span><br><span class="line"><span class="comment">//调用 toString</span></span><br><span class="line"><span class="comment">//11</span></span><br></pre></td></tr></table></figure>
+
+<p>先执行valueOf，然后执行toString。</p>
+<p>通过这两个例子我们就能知道了，虽然会先执行一个，但是如果先执行的那个返回的并不是基本类型的值得话，就会执行另一个。而如果两个都返回对象的话，我试了一下，会报错</p>
+<p><strong>方法名运算：</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> a = <span class="number">1</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(a);</span><br><span class="line">&#125;</span><br><span class="line">test.valueOf = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;调用 valueOf方法&#x27;</span>);</span><br><span class="line">    <span class="keyword">return</span> &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line">test.toString = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;调用 toString方法&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="number">3</span></span><br><span class="line">&#125;</span><br><span class="line">test;</span><br><span class="line"><span class="comment">// 调用 valueOf 方法</span></span><br><span class="line"><span class="comment">// 调用 toString 方法</span></span><br><span class="line"><span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="BOM属性对象方法"><a href="#BOM属性对象方法" class="headerlink" title="BOM属性对象方法"></a>BOM属性对象方法</h2><h3 id="Window对象"><a href="#Window对象" class="headerlink" title="Window对象"></a>Window对象</h3><h4 id="Window方法"><a href="#Window方法" class="headerlink" title="Window方法"></a>Window方法</h4><p><strong>confirm：</strong></p>
+<p>创建一个需要用户确认的对话框，参数为提示信息</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.confirm(<span class="string">&#x27;确认信息&#x27;</span>);</span><br><span class="line"><span class="comment">//点确认返回true</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>open：</strong></p>
+<p>打开一个新的浏览器窗口或查找一个已命名的窗口</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.open(URL, name, features, replace);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>URL：一个可选字符串，声明了要在新窗口显示的文档的URL。如果省略了这个参数，或者它的值是空字符串，那么新窗口不会显示任何文档</p>
+</li>
+<li><p>name：一个可选的字符串，该字符串是一个由逗号分隔的特征列表，其中包含数字、字母和下划线，该字符声明了新窗口的名称。这个名称可以用作标记 &lt;a&gt; 和&lt;form&gt; 的属性 target 的值。如果该参数指定了一个已经存在的窗口，那么 open() 方法就不再创建一个新窗口，而只是返回对指定窗口的引用。在这种情况下，features 将被忽略。</p>
+</li>
+<li><p>featrues：一个可选的字符串，声明了新窗口要显示的标准浏览器的特征。如果省略该参数，新窗口将具有所有标准特征。在<a target="_blank" rel="noopener" href="https://www.w3school.com.cn/jsref/met_win_open.asp#windowfeatures">窗口特征</a>这个表格中，我们对该字符串的格式进行了详细的说明。</p>
+</li>
+<li><p>replace：一个可选的布尔值。规定了装载到窗口的URL是在窗口的浏览历史中创建一个新条目，还是替换浏览器历史中的当前条目。支持下面的值：</p>
+<ul>
+<li>true - URL替换浏览器历史中的当前条目</li>
+<li>false - URL在浏览器历史中创建新的条目</li>
+</ul>
+</li>
+</ul>
+<p><strong>close：</strong></p>
+<p>关闭当前窗口</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.close();</span><br></pre></td></tr></table></figure>
+
+<h4 id="Window属性"><a href="#Window属性" class="headerlink" title="Window属性"></a>Window属性</h4><p><strong>closed：</strong></p>
+<p>页面是否关闭</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> myWindow = <span class="built_in">window</span>.open(<span class="string">&#x27;http://www.baidu.com&#x27;</span>, <span class="string">&#x27;baidu&#x27;</span>);</span><br><span class="line">myWindow.closed; <span class="comment">// false</span></span><br><span class="line">myWindow.close();</span><br><span class="line">myWindow.closed; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>opener：</strong></p>
+<p>返回打开该窗口的窗口的引用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> myWindow = <span class="built_in">window</span>.open(<span class="string">&#x27;http://www.baidu.com&#x27;</span>, <span class="string">&#x27;baidu&#x27;</span>);</span><br><span class="line">myWindow.opener</span><br></pre></td></tr></table></figure>
+
+<p><strong>document和history：</strong></p>
+<p>window和document以及history没有明确的所属关系。window只是存在一个document和history引用。因为window对象除了充当控制浏览器的对象外，还充当全局作用域。所以必须存在有document的引用。</p>
+<h3 id="Navigator对象"><a href="#Navigator对象" class="headerlink" title="Navigator对象"></a>Navigator对象</h3><p><strong>appName属性：</strong></p>
+<p>一般浏览器除了ie(Internet explore)以外差不多打出来的appName几乎都是”Netscape”</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">navigator.appName; <span class="comment">//&quot;Netscape&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>online属性：</strong></p>
+<p>指明系统是否处于脱机状态，也就是检查有没有网，没网返回false，有网返回true</p>
+<p><strong>userAgent属性：</strong>返回客户端的完整信息，可以判断机型、浏览器、手机端还是PC端</p>
+<h3 id="Screen对象"><a href="#Screen对象" class="headerlink" title="Screen对象"></a>Screen对象</h3><p><strong>deviceXDPI：</strong></p>
+<p>返回显示屏幕的每英寸水平点（像素）数。返回的其实就是分辨率，而那个水平点数中的一点就是一像素，DPI是显示分辨率的一个比例值，DPI越高说明分辨率越高</p>
+<p><strong>availHeight：</strong></p>
+<p>屏幕的像素高度减去系统部件高度之后的值(只读)，代表屏幕可用高度，单位为像素</p>
+<p><strong>height：</strong></p>
+<p>屏幕的像素高度</p>
+<p><strong>width：</strong></p>
+<p>屏幕的像素宽度</p>
+<h3 id="History对象"><a href="#History对象" class="headerlink" title="History对象"></a>History对象</h3><h4 id="History对象属性"><a href="#History对象属性" class="headerlink" title="History对象属性"></a>History对象属性</h4><p><strong>length：</strong></p>
+<p>在同一个标签页中，跳转了多少次。</p>
+<p>例如，我们打开一个标签页，length为1，在标签页内访问百度，length为2。百度搜索一个内容，跳转到搜索结果页面，length为3.</p>
+<h4 id="History对象方法"><a href="#History对象方法" class="headerlink" title="History对象方法"></a>History对象方法</h4><p><strong>back：</strong></p>
+<p>加载history列表中的前一个URL</p>
+<p><strong>forward：</strong></p>
+<p>加载history列表中的下一个URL</p>
+<p><strong>go：</strong></p>
+<p>加载history列表中的某个具体页面</p>
+<h3 id="Location对象"><a href="#Location对象" class="headerlink" title="Location对象"></a>Location对象</h3><p><strong>host属性：</strong></p>
+<p>设置或返回当前主机名和当前URL的端口号</p>
+<p><strong>hostname：</strong></p>
+<p>设置或返回当前URL的主机名</p>
+<p><strong>protocol：</strong></p>
+<p>返回或设置当前URL的协议</p>
+<p><strong>search：</strong></p>
+<p>返回或设置从问号开始的URL部分，及查询部分</p>
+<p><strong>hash：</strong></p>
+<p>设置或返回从井号开始的URL（锚）</p>
+<h2 id="JS中的map和reduce"><a href="#JS中的map和reduce" class="headerlink" title="JS中的map和reduce"></a>JS中的map和reduce</h2><h3 id="map方法"><a href="#map方法" class="headerlink" title="map方法"></a>map方法</h3><p><strong>定义：</strong> map方法创建一个新数组。数组内容为调用map方法的数组中的每个元素调用一个提供函数后的返回的结果。</p>
+<p>例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> array = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>];</span><br><span class="line"><span class="keyword">const</span> map1 = array.map(<span class="function"><span class="params">x</span> =&gt;</span> x * <span class="number">2</span>);</span><br><span class="line"><span class="built_in">console</span>.log(map1);</span><br><span class="line"><span class="comment">//[2,4,6,8,10]</span></span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是，map()方法创建了一个新数组，但新数组并不是在遍历完原数组后才被复制，而是遍历一次就得到一个值。下面就是一个很好的例子</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> array1 = [<span class="number">1</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">16</span>];</span><br><span class="line"> </span><br><span class="line"><span class="keyword">const</span> map1 = array1.map(<span class="function"><span class="params">x</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (x == <span class="number">4</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> x * <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(map1);</span><br><span class="line"><span class="comment">// [undefined, 8, undefined, undefined]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="reduce方法"><a href="#reduce方法" class="headerlink" title="reduce方法"></a>reduce方法</h3><p><strong>定义：</strong>为数组中的每一个元素一次执行回调函数，不包括数组中被删除或未被赋值的元素。</p>
+<p><strong>语法：</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arr.reduce(callback, [initiaValue]);</span><br></pre></td></tr></table></figure>
+
+<p>回调函数接受四个参数：</p>
+<ul>
+<li>previousValue： 上次调用回调函数返回的值，或者是提供的初始值（initiaValue)</li>
+<li>currentValue：数组中当前被处理的元素</li>
+<li>index：当前元素在数组中的索引</li>
+<li>array：调用reduce的数组</li>
+</ul>
+<p>initialValue参数作为第一次调用回调函数的第一个参数。</p>
+<p><strong>几个例子：</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>];</span><br><span class="line"><span class="keyword">let</span> sum = arr.reduce(<span class="function"><span class="keyword">function</span>(<span class="params">prev, cur, index, arr</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(prev, cur, index);</span><br><span class="line">    <span class="keyword">return</span> prev + cur;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(arr, sum);</span><br></pre></td></tr></table></figure>
+
+<p><img src="%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B911/reduce1.png" alt="reduce1"></p>
+<p>index从1开始，第一次的prev的值是数组的第一个值。数组长度是4，但是reduce函数循环3次。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>];</span><br><span class="line"><span class="keyword">let</span> sum = arr.reduce(<span class="function"><span class="keyword">function</span>(<span class="params">prev, cur, index, arr</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(prev, cur, index);</span><br><span class="line">    <span class="keyword">return</span> prev + cur;</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"><span class="built_in">console</span>.log(arr, sum);</span><br></pre></td></tr></table></figure>
+
+<p><img src="%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B911/reduce2.png" alt="reduce2"></p>
+<p>这个例子index从0开始，因为我们传入了一个初始值0。</p>
+<p>由这两个例子我们可以得出一个结论：</p>
+<p>如果没有提供initialValue，reduce会从索引1的地方开始执行回调函数，跳过第一个索引。如果提供了，从索引0开始。</p>
+<p>而如果调用reduce方法的数组为空，且没提供初始值，会引发报错。提供初始值就不会报错。</p>
+<p><strong>reduce的高级用法：</strong></p>
+<p>1.计算数组中每个元素出现的次数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> names = [<span class="string">&#x27;Alice&#x27;</span>, <span class="string">&#x27;Bob&#x27;</span>, <span class="string">&#x27;Tiff&#x27;</span>, <span class="string">&#x27;Bruce&#x27;</span>, <span class="string">&#x27;Alice&#x27;</span>, <span class="string">&#x27;Bob&#x27;</span>];</span><br><span class="line"><span class="keyword">let</span> nameNum = names.reduce(<span class="function">(<span class="params">pre, cur</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span>(cur <span class="keyword">in</span> pre) &#123;</span><br><span class="line">        pre[cur]++;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        pre[cur] = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> pre;</span><br><span class="line">&#125;, &#123;&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(nameNum);</span><br><span class="line"><span class="comment">//&#123;Alice: 2, Bob: 2, Tiff: 1, Bruce: 1&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>2.数组去重</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">4</span>,<span class="number">1</span>]</span><br><span class="line"><span class="keyword">let</span> newArr = arr.reduce(<span class="function">(<span class="params">pre, cur</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span>(!pre.includes(cur)) &#123;</span><br><span class="line">        <span class="keyword">return</span> pre.concat(cur);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> pre;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;, []);</span><br><span class="line"><span class="built_in">console</span>.log(newArr);</span><br><span class="line"><span class="comment">//[1,2,3,4,1]</span></span><br></pre></td></tr></table></figure>
+
+<p>这个程序我在写的时候第一次考虑的不是用concat，而是push。当时我的想法就是把当前值压入之前返回的数组。但是运行的时候报错了。pre.includes不是一个方法。后来一想，push方法的返回值是压入的那个值，所以改用了concat。这也暴露我对一些函数的返回值记得不清楚的问题。</p>
+<p>3.将二维数组转换为一维数组</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [[<span class="number">0</span>, <span class="number">1</span>], [<span class="number">2</span>, <span class="number">3</span>], [<span class="number">4</span>, <span class="number">5</span>]]</span><br><span class="line"><span class="keyword">let</span> newArr = arr.reduce(<span class="function">(<span class="params">pre,cur</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> pre.concat(cur)</span><br><span class="line">&#125;,[])</span><br><span class="line"><span class="built_in">console</span>.log(newArr); </span><br><span class="line"><span class="comment">// [0, 1, 2, 3, 4, 5]</span></span><br></pre></td></tr></table></figure>
+
+<p>4.将多维数组转换为一维</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [[<span class="number">0</span>, <span class="number">1</span>], [<span class="number">2</span>, <span class="number">3</span>], [<span class="number">4</span>,[<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>]]]</span><br><span class="line"><span class="keyword">const</span> newArr = <span class="function"><span class="keyword">function</span>(<span class="params">arr</span>)</span>&#123;</span><br><span class="line">   <span class="keyword">return</span> arr.reduce(<span class="function">(<span class="params">pre,cur</span>)=&gt;</span>pre.concat(<span class="built_in">Array</span>.isArray(cur)?newArr(cur):cur),[])</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(newArr(arr)); </span><br><span class="line"><span class="comment">//[0, 1, 2, 3, 4, 5, 6, 7]</span></span><br></pre></td></tr></table></figure>
+
+<p>5.对象里的属性求和</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> result = [</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">subject</span>: <span class="string">&#x27;math&#x27;</span>,</span><br><span class="line">        <span class="attr">score</span>: <span class="number">10</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">subject</span>: <span class="string">&#x27;chinese&#x27;</span>,</span><br><span class="line">        <span class="attr">score</span>: <span class="number">20</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">subject</span>: <span class="string">&#x27;english&#x27;</span>,</span><br><span class="line">        <span class="attr">score</span>: <span class="number">30</span></span><br><span class="line">    &#125;</span><br><span class="line">];</span><br><span class="line"><span class="keyword">let</span> sum = result.reduce(<span class="function">(<span class="params">pre, cur</span>) =&gt;</span> &#123; <span class="keyword">return</span> cur.score + pre; &#125;, <span class="number">0</span>);</span><br><span class="line"><span class="built_in">console</span>.log(sum)</span><br><span class="line"><span class="comment">// 60</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="JS中的arguments"><a href="#JS中的arguments" class="headerlink" title="JS中的arguments"></a>JS中的arguments</h2><p><strong>定义：</strong> arguments是所在函数的一个内置类数组对象。存放函数的调用时的参数。</p>
+<p>在ES5的非严格模式下，arguments对象会反应出具名参数的变化</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mixArgs</span>(<span class="params">first, second</span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(first === <span class="built_in">arguments</span>[<span class="number">0</span>]);</span><br><span class="line">	<span class="built_in">console</span>.log(second === <span class="built_in">arguments</span>[<span class="number">1</span>]) ;</span><br><span class="line">	first = <span class="string">&quot;c&quot;</span>;</span><br><span class="line">	second = <span class="string">&quot;d&quot;</span>;</span><br><span class="line">	<span class="built_in">console</span>.log(first === <span class="built_in">arguments</span>[<span class="number">0</span>]);</span><br><span class="line">	<span class="built_in">console</span>.log(second === <span class="built_in">arguments</span>[<span class="number">1</span>]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//输出</span></span><br><span class="line"><span class="literal">true</span></span><br><span class="line"><span class="literal">true</span></span><br><span class="line"><span class="literal">true</span></span><br><span class="line"><span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>在严格模式下，这种情况被消除了，具名参数的变化不会引起arguments的变化。</p>
+<p>在ES6中，arguments对象跟ES5严格模式一样。而且在ES6引入参数默认值后，使用默认值的参数不会包含在arguments中。arguments对象反应了最初是的函数调用状态。</p>
+<p>arguments对象还拥有一个callee属性，callee属性指向arguments所属的函数，因此我们可以不使用函数名来进行递归调用。</p>
+<p>而且由于JS不存在函数重载，所以我们可以使用arguments来模拟函数重载。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2019/12/02/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B911/">秋招复习计划-JavaScript知识点11</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页"></a></p>
+        <p><span>发布时间:</span>2019-12-02, 20:45:06</p>
+        <p><span>最后更新:</span>2019-12-05, 22:33:55</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2019/12/02/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B911/" title="秋招复习计划-JavaScript知识点11">http://doubler.cn/2019/12/02/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B911/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://doubler.cn/2019/12/02/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B911/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2019/12/04/ES6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B09-%E5%A2%9E%E5%BC%BA%E7%9A%84%E6%95%B0%E7%BB%84%E5%8A%9F%E8%83%BD/">
+                    ES6学习笔记9--增强的数组功能
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2019/12/01/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B910/">
+                    秋招复习计划-JavaScript知识点10
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E4%B8%8E%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E4%B8%AD%E7%9A%84%E8%A3%85%E7%AE%B1%E5%92%8C%E6%8B%86%E7%AE%B1%E6%93%8D%E4%BD%9C"><span class="toc-number">1.</span> <span class="toc-text">基本类型与引用类型转换中的装箱和拆箱操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9A%90%E5%BC%8F%E8%A3%85%E7%AE%B1"><span class="toc-number">1.1.</span> <span class="toc-text">隐式装箱</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%98%BE%E7%A4%BA%E8%A3%85%E7%AE%B1"><span class="toc-number">1.2.</span> <span class="toc-text">显示装箱</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8B%86%E7%AE%B1%E6%93%8D%E4%BD%9C"><span class="toc-number">1.3.</span> <span class="toc-text">拆箱操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BOM%E5%B1%9E%E6%80%A7%E5%AF%B9%E8%B1%A1%E6%96%B9%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">BOM属性对象方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Window%E5%AF%B9%E8%B1%A1"><span class="toc-number">2.1.</span> <span class="toc-text">Window对象</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Window%E6%96%B9%E6%B3%95"><span class="toc-number">2.1.1.</span> <span class="toc-text">Window方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Window%E5%B1%9E%E6%80%A7"><span class="toc-number">2.1.2.</span> <span class="toc-text">Window属性</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Navigator%E5%AF%B9%E8%B1%A1"><span class="toc-number">2.2.</span> <span class="toc-text">Navigator对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Screen%E5%AF%B9%E8%B1%A1"><span class="toc-number">2.3.</span> <span class="toc-text">Screen对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#History%E5%AF%B9%E8%B1%A1"><span class="toc-number">2.4.</span> <span class="toc-text">History对象</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#History%E5%AF%B9%E8%B1%A1%E5%B1%9E%E6%80%A7"><span class="toc-number">2.4.1.</span> <span class="toc-text">History对象属性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#History%E5%AF%B9%E8%B1%A1%E6%96%B9%E6%B3%95"><span class="toc-number">2.4.2.</span> <span class="toc-text">History对象方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Location%E5%AF%B9%E8%B1%A1"><span class="toc-number">2.5.</span> <span class="toc-text">Location对象</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JS%E4%B8%AD%E7%9A%84map%E5%92%8Creduce"><span class="toc-number">3.</span> <span class="toc-text">JS中的map和reduce</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#map%E6%96%B9%E6%B3%95"><span class="toc-number">3.1.</span> <span class="toc-text">map方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#reduce%E6%96%B9%E6%B3%95"><span class="toc-number">3.2.</span> <span class="toc-text">reduce方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JS%E4%B8%AD%E7%9A%84arguments"><span class="toc-number">4.</span> <span class="toc-text">JS中的arguments</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"秋招复习计划-JavaScript知识点11　| DoubleR's BLOG　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2019/12/04/ES6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B09-%E5%A2%9E%E5%BC%BA%E7%9A%84%E6%95%B0%E7%BB%84%E5%8A%9F%E8%83%BD/" title="上一篇: ES6学习笔记9--增强的数组功能">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2019/12/01/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B910/" title="下一篇: 秋招复习计划-JavaScript知识点10">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/%E7%AE%97%E6%B3%95%E9%A2%988/">算法题8</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/01/Webpack%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E6%A6%82%E5%BF%B5/">Webpack学习笔记-概念</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/10/%E6%98%A5%E6%8B%9B%E7%9A%84%E5%BF%83%E8%B7%AF%E5%8E%86%E7%A8%8B-%E5%AD%97%E8%8A%82%E8%B7%B3%E5%8A%A8%E4%B8%8A%E5%B2%B8/">春招的心路历程-字节跳动上岸</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/25/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-Cookie%E7%9B%B8%E5%85%B3/">秋招复习计划-Cookie相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/23/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/">秋招复习计划-浏览器缓存</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/13/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-%E7%AE%97%E6%B3%95%E9%A2%987/">秋招复习计划-算法题7</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/10/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-ES6%E7%9F%A5%E8%AF%86%E7%82%B92/">秋招复习计划-ES6知识点2</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/10/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-%E6%89%8B%E5%86%99%E4%BB%A3%E7%A0%812/">秋招复习计划-手写代码2</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/29/%E9%98%BF%E9%87%8C%E8%BE%BE%E6%91%A9%E9%99%A2%E8%AE%AD%E7%BB%83%E9%A2%985/">阿里达摩院训练题5</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/28/%E9%98%BF%E9%87%8C%E8%BE%BE%E6%91%A9%E9%99%A2%E8%AE%AD%E7%BB%83%E9%A2%984/">阿里达摩院训练题4</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/27/%E9%98%BF%E9%87%8C%E8%BE%BE%E6%91%A9%E9%99%A2%E8%AE%AD%E7%BB%83%E9%A2%983/">阿里达摩院训练题3</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/26/%E9%98%BF%E9%87%8C%E8%BE%BE%E6%91%A9%E9%99%A2%E8%AE%AD%E7%BB%83%E9%A2%982/">阿里达摩院训练题2</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/25/%E9%98%BF%E9%87%8C%E8%BE%BE%E6%91%A9%E9%99%A2%E8%AE%AD%E7%BB%83%E9%A2%981/">阿里达摩院训练题1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/25/JavaScript%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B011-%E5%80%BC/">JavaScript学习笔记11-值</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/17/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-%E7%AE%97%E6%B3%95%E9%A2%986/">秋招复习计划-算法题6</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/11/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-Vue%E7%9F%A5%E8%AF%86%E7%82%B94/">秋招复习计划-Vue知识点4</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/09/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-Vue%E7%9F%A5%E8%AF%86%E7%82%B93/">秋招复习计划-Vue知识点3</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/06/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-ES6%E7%9F%A5%E8%AF%86%E7%82%B91/">秋招复习计划-ES6知识点1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/01/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-%E6%89%8B%E5%86%99%E4%BB%A3%E7%A0%811/">秋招复习计划-手写代码1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/31/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-Vue%E7%9F%A5%E8%AF%86%E7%82%B92/">秋招复习计划-Vue知识点2</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/26/ES6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B010-Promise%E4%B8%8E%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B/">ES6学习笔记10-Promise与异步编程</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/18/JavaScript%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B010-%E7%B1%BB%E5%9E%8B/">JavaScript学习笔记10-类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/14/%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%8E%86-%E5%AD%97%E8%8A%82%E8%B7%B3%E5%8A%A8%E5%A5%BD%E5%A5%BD%E5%AD%A6%E4%B9%A0%E6%96%B9%E5%90%91/">面试经历-字节跳动好好学习方向</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/10/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-CSS%E7%9F%A5%E8%AF%86%E7%82%B91/">秋招复习计划-CSS知识点1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/09/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9F%A5%E8%AF%86%E7%82%B91/">秋招复习计划-计算机网络知识点1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/08/CSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B03-%E5%9F%BA%E6%9C%AC%E8%A7%86%E8%A7%89%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%92%8C%E7%9B%92%E5%BC%8F%E6%A8%A1%E5%9E%8B/">CSS学习笔记3-基本视觉格式化和盒式模型</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/07/JavaScript%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B09-%E8%A1%8C%E4%B8%BA%E5%A7%94%E6%89%98/">JavaScript学习笔记9-行为委托</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/06/CSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02-%E7%BB%93%E6%9E%84%E5%92%8C%E5%B1%82%E5%8F%A0/">CSS学习笔记2--结构和层叠</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/03/%E9%AB%98%E5%BE%B7%E5%9C%B0%E5%9B%BEAPI%E7%9A%84%E4%BD%BF%E7%94%A8/">高德地图API的使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/04/ES6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B09-%E5%A2%9E%E5%BC%BA%E7%9A%84%E6%95%B0%E7%BB%84%E5%8A%9F%E8%83%BD/">ES6学习笔记9--增强的数组功能</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/02/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B911/">秋招复习计划-JavaScript知识点11</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/01/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B910/">秋招复习计划-JavaScript知识点10</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/29/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-Vue%E7%9F%A5%E8%AF%86%E7%82%B91/">秋招复习计划-Vue知识点1</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/26/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-%E7%AE%97%E6%B3%95%E9%A2%985/">秋招复习计划-算法题5</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/19/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B99/">秋招复习计划-JavaScript知识点9</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/15/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B98/">秋招复习计划-JavaScript知识点8</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/12/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-%E7%AE%97%E6%B3%95%E9%A2%984/">秋招复习计划-算法题4</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/09/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B97/">秋招复习计划-JavaScript知识点7</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/04/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B96/">秋招复习计划--JavaScript知识点6</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/03/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B95/">秋招复习计划-JavaScript知识点5</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/01/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-%E7%AE%97%E6%B3%95%E9%A2%983/">秋招复习计划-算法题3</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/24/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B94/">秋招复习计划-JavaScript知识点4</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/22/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-%E7%AE%97%E6%B3%95%E9%A2%982/">秋招复习计划-算法题2</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/21/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B93/">秋招复习计划-JavaScript知识点3</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/21/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-%E7%AE%97%E6%B3%95%E9%A2%981/">秋招复习计划-算法题1</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/15/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B92/">秋招复习计划-JavaScript知识点2</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/14/ES6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B08--JS%E7%9A%84%E7%B1%BB/">ES6学习笔记8--JS的类</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/14/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B91/">秋招复习计划-JavaScript知识点1</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/30/ES6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B07--%E8%BF%AD%E4%BB%A3%E5%99%A8%E4%B8%8E%E7%94%9F%E6%88%90%E5%99%A8/">ES6学习笔记7--迭代器与生成器</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/29/%E6%89%8B%E5%86%99%E7%AD%BE%E5%90%8D%E8%AF%86%E5%88%AB%E9%A1%B9%E7%9B%AE2/">手写签名识别项目2--问题记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/24/%E5%88%A9%E7%94%A8Canvas%E5%AE%9E%E7%8E%B0%E6%89%8B%E5%86%99%E6%9D%BF%E7%9A%84%E6%8F%92%E4%BB%B6/">利用Canvas实现手写板的插件1--touch事件与Canvas的基本使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/24/ES6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B06--Set%E4%B8%8EMap/">ES6学习笔记6--Set与Map</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/24/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92/">秋招复习计划</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/23/%E6%89%8B%E5%86%99%E7%AD%BE%E5%90%8D%E8%AF%86%E5%88%AB%E9%A1%B9%E7%9B%AE1/">手写签名识别项目1</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/21/ES6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B05--%E7%AC%A6%E5%8F%B7/">ES6学习笔记5--符号</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/18/ES6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B04--%E8%A7%A3%E6%9E%84%E8%B5%8B%E5%80%BC/">ES6学习笔记4--解构赋值</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/16/ES6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B03--%E5%AF%B9%E8%B1%A1/">ES6学习笔记3--对象</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/10/ES6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02--%E5%87%BD%E6%95%B0/">ES6学习笔记2--函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/09/JavaScript%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B08-%E5%8E%9F%E5%9E%8B/">JavaScript学习笔记8--原型</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/09/JavaScript%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B07-%E5%AF%B9%E8%B1%A1/">JavaScript学习笔记7--对象</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/31/JavaScript%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B06--JSON%E4%B8%8EAJAX/">JavaScript学习笔记6--JSON与AJAX</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/31/ES6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B01--%E5%9D%97%E7%BA%A7%E7%BB%91%E5%AE%9A/">ES6学习笔记1--块级绑定</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/29/NodeJs%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B03/">NodeJs学习笔记3</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/28/JavaScript%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B05--this%E5%85%A8%E9%9D%A2%E8%A7%A3%E6%9E%90/">JavaScript学习笔记5--this全面解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/26/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B01/">JavaScript设计模式学习笔记1</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/09/NodeJs%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02/">NodeJs学习笔记2</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/06/NodeJs%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B01/">NodeJs学习笔记1</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/04/JavaScript%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B04--%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%97%AD%E5%8C%85/">JavaScript学习笔记4--提升与作用域闭包</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/03/JavaScript%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B03--%E5%87%BD%E6%95%B0%E4%BD%9C%E7%94%A8%E5%9F%9F%E4%B8%8E%E5%9D%97%E4%BD%9C%E7%94%A8%E5%9F%9F/">JavaScript学习笔记3--函数作用域与块作用域</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/02/JavaScript%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02--%E8%AF%8D%E6%B3%95%E4%BD%9C%E7%94%A8%E5%9F%9F/">JavaScript学习笔记2--词法作用域</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/30/JavaScript%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B01--%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">JavaScript学习笔记1--作用域</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/06/CSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B01-%E9%80%89%E6%8B%A9%E5%99%A8/">CSS学习笔记1--选择器</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2017-2021 Double--R
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+       
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+
+</script>
+<script type="text/javascript" src="/resources/love.js"></script>
+<script type="text/javascript" src="/resources/float.js"></script>
+<script type="text/javascript" src="/resources/typewriter.js"></script>
+<script type="text/javascript" color=0,104,183 opacity=1  zindex=-1 count=50 src="/resources/particle.js"></script>
+  </div>
+</body>
+</html>

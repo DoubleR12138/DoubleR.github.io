@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Double--R" />
+
+
+
+<meta name="description" content="前言 数组从一开始就是JS中的一种基本对象。但是随着ES的版本迭代，数组的功能却基本不变，直到ES6。ES6为数组添加了许多功能来强化数组，并且添加了创建类型化数组的能力">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ES6学习笔记9--增强的数组功能">
+<meta property="og:url" content="http://doubler.cn/2019/12/04/ES6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B09-%E5%A2%9E%E5%BC%BA%E7%9A%84%E6%95%B0%E7%BB%84%E5%8A%9F%E8%83%BD/index.html">
+<meta property="og:site_name" content="DoubleR&#39;s BLOG">
+<meta property="og:description" content="前言 数组从一开始就是JS中的一种基本对象。但是随着ES的版本迭代，数组的功能却基本不变，直到ES6。ES6为数组添加了许多功能来强化数组，并且添加了创建类型化数组的能力">
+<meta property="og:locale">
+<meta property="og:image" content="http://doubler.cn/2019/12/04/ES6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B09-%E5%A2%9E%E5%BC%BA%E7%9A%84%E6%95%B0%E7%BB%84%E5%8A%9F%E8%83%BD/ES6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B09-%E5%A2%9E%E5%BC%BA%E7%9A%84%E6%95%B0%E7%BB%84%E5%8A%9F%E8%83%BD/42.jpg">
+<meta property="og:image" content="http://doubler.cn/2019/12/04/ES6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B09-%E5%A2%9E%E5%BC%BA%E7%9A%84%E6%95%B0%E7%BB%84%E5%8A%9F%E8%83%BD/ES6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B09-%E5%A2%9E%E5%BC%BA%E7%9A%84%E6%95%B0%E7%BB%84%E5%8A%9F%E8%83%BD%5C1.png">
+<meta property="article:published_time" content="2019-12-04T11:01:50.000Z">
+<meta property="article:modified_time" content="2020-02-06T10:23:41.446Z">
+<meta property="article:author" content="Double--R">
+<meta property="article:tag" content="ECMAScript6">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://doubler.cn/2019/12/04/ES6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B09-%E5%A2%9E%E5%BC%BA%E7%9A%84%E6%95%B0%E7%BB%84%E5%8A%9F%E8%83%BD/ES6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B09-%E5%A2%9E%E5%BC%BA%E7%9A%84%E6%95%B0%E7%BB%84%E5%8A%9F%E8%83%BD/42.jpg">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="DoubleR&#39;s BLOG" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>ES6学习笔记9--增强的数组功能 | DoubleR&#39;s BLOG</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: false
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/13.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/"></a></h1>
+        </hgroup>
+
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                            <li><a href="/pdf/">资料</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:1036460042@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" rel="noopener" href="https://github.com/doubler12138" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ECMAScript6/" rel="tag">ECMAScript6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92/" rel="tag">复习计划</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%8B%E5%86%99%E4%BB%A3%E7%A0%81/" rel="tag">手写代码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%8B%E5%86%99%E7%AD%BE%E5%90%8D/" rel="tag">手写签名</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag">浏览器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BB%83%E4%B9%A0%E9%A2%98/" rel="tag">练习题</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag">计算机网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%8E%86/" rel="tag">面试经历</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%AB%98%E5%BE%B7%E5%9C%B0%E5%9B%BE/" rel="tag">高德地图</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://zzzwyyy.github.io/">小仙女的博客</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://github.com/doubler12138">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://fofa.so/">Fofa</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://www.anquanke.com/">安全客</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://vulhub.org/">Vulhub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://www.vulnhub.com/">Vulnhub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://wx.zsxq.com/">知识星球</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://paper.seebug.org/">SeeBug</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://www.sec-wiki.com/news">SecWiki</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://kingfast.top/">KingFast</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://seclists.org/oss-sec/">SecList</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://www.jarvisoj.com/login">JarvisOJ</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://f1sh.site/">Fish</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://www.k0rz3n.com/">K0rz3n</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://pupiles.com/">Pupiles</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://ox1234.github.io/">Flight</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://wyb0.com/">Reber</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://codeqi.top/">Qiqi</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://quincyblog.top/">Quincy</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://blog.void0red.top/">Void0red</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://yulige.top/">郁离歌</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://www.leavesongs.com/">离别歌</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://www.linkedbyx.com/home">Linked by X</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://chujian521.github.io/">Xin</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于学习</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页"></a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/13.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页"></a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                    <li><a href="/pdf/">资料</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:1036460042@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/doubler12138" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="new-ES6学习笔记9-增强的数组功能" class="article article-type-new" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/12/04/ES6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B09-%E5%A2%9E%E5%BC%BA%E7%9A%84%E6%95%B0%E7%BB%84%E5%8A%9F%E8%83%BD/" class="article-date">
+      <time datetime="2019-12-04T11:01:50.000Z" itemprop="datePublished">2019-12-04</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      ES6学习笔记9--增强的数组功能
+    </h1>
+  
+
+		<div style="margin-top:20px;">
+	<span class="post-time">
+		<span class="post-meta-item-icon">
+			<i class="fa fa-keyboard-o"></i>
+			<span class="post-meta-item-text"> 字数统计: </span>
+			<span class="post-count">3.9k字</span>
+		</span>
+	</span>
+	
+	<span class="post-time">
+		&nbsp; | &nbsp;
+		<span class="post-meta-item-icon">
+			<i class="fa fa-hourglass-half"></i>
+			<span class="post-meta-item-text"> 阅读时长: </span>
+			<span class="post-count">14分</span>
+		</span>
+	</span>
+</div>
+
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud" style="margin-top:30px;">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ECMAScript6/" rel="tag">ECMAScript6</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p><strong>前言</strong></p>
+<p>数组从一开始就是JS中的一种基本对象。但是随着ES的版本迭代，数组的功能却基本不变，直到ES6。ES6为数组添加了许多功能来强化数组，并且添加了创建类型化数组的能力</p>
+<hr>
+<p><img src="ES6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B09-%E5%A2%9E%E5%BC%BA%E7%9A%84%E6%95%B0%E7%BB%84%E5%8A%9F%E8%83%BD/42.jpg" alt="42"></p>
+<span id="more"></span>
+
+<div align="center">
+    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1398508295&auto=1&height=66"></iframe>
+</div>
+
+<h2 id="创建数组"><a href="#创建数组" class="headerlink" title="创建数组"></a>创建数组</h2><h3 id="Array-of-方法"><a href="#Array-of-方法" class="headerlink" title="Array.of()方法"></a>Array.of()方法</h3><p>在ES6之前通过Array构造器创建数组时总有一个怪了一点。调用<code>new Array()</code>构造器时，根据传入的参数与数量的不同，实际上会导致一些不同的结果</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> items = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">2</span>);</span><br><span class="line"><span class="built_in">console</span>.log(items.length); <span class="comment">//2</span></span><br><span class="line"><span class="built_in">console</span>.log(items[<span class="number">0</span>]); <span class="comment">// undefined</span></span><br><span class="line"><span class="built_in">console</span>.log(times[<span class="number">1</span>]); <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+
+<p>及在使用单个数值作为参数来调用Array构造器时，数组的长度属性会被设置为该参数；而使用单个非数值型来调用，该参数就会成为目标数组的唯一项。</p>
+<p>ES6引入了Array.of()方法来解决这个怪异的点。该方法的作用非常类似于Array构造器，但在使用单个数值参数的时候并不导致特殊结果。Array.of()方法总会创建一个包含所有传入参数的数值，而不管参数的数量和类型。。</p>
+<p><strong>需要注意的是：</strong></p>
+<p>Array.of()方法并没有使用Symbol.species属性来决定返回值的类型，而是使用了当前的构造器（即of()方法内部的this）来决定的。</p>
+<h3 id="Array-from-方法"><a href="#Array-from-方法" class="headerlink" title="Array.from()方法"></a>Array.from()方法</h3><p>在ES5版本前，我们将类数组对象转换为数组总是显得很麻烦。我们通常使用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.prototype.slice.call(arrLike);</span><br><span class="line">[].slice.call(arrLike);</span><br></pre></td></tr></table></figure>
+
+<p>来实现类数组对象转换为数组。尽管这种方法使用较小的代码量即可完成转换，但是从代码的表现形式来看，我们并无法得知其功能就是完成类数组向数组的转换。也就是说这样的代码形式在功能的体现上不够直观。于是在ES6版本中引入了Array.from()方法。</p>
+<p>Array.from()方法传入一个可迭代对象或类数组对象，返回其数组的表现形式。</p>
+<p><strong>Array.from()方法同样使用this来决定返回什么类型的数组，而不是使用知名符号Symbol.species</strong></p>
+<h4 id="映射转换"><a href="#映射转换" class="headerlink" title="映射转换"></a>映射转换</h4><p>如果你想做进一步的转换，可以想Array.from()方法传入第二个参数，一个映射用的函数。该函数会将类数组对象的每一个值转换为目标形式，并将其存储在目标数组的对应位置上。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">translate</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Array</span>.from(<span class="built_in">arguments</span>, <span class="function">(<span class="params">value</span>) =&gt;</span> value + <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> numbers = translate(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>);</span><br><span class="line"><span class="built_in">console</span>.log(numbers);</span><br></pre></td></tr></table></figure>
+
+<p>如果映射函数需要在对象上进行工作，这时我们可以想Array.from()方法传入第三个参数，从而指定映射函数执行时内部的this值</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> helper = &#123;</span><br><span class="line">	<span class="attr">diff</span> : <span class="number">1</span>,</span><br><span class="line">	<span class="function"><span class="title">add</span>(<span class="params">value</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> value + <span class="built_in">this</span>.diff;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">translate</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Array</span>.from(<span class="built_in">arguments</span>, helper.add, helper);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> numbers = translate(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>);</span><br><span class="line"><span class="built_in">console</span>.log(numbers);</span><br></pre></td></tr></table></figure>
+
+<h4 id="在可迭代对象上使用"><a href="#在可迭代对象上使用" class="headerlink" title="在可迭代对象上使用"></a>在可迭代对象上使用</h4><p>Array.from()方法不仅可用于类数组对象，也可以用于可迭代对象，这也就意味着我们可以将任意包含<code>Symbol.iterator</code>属性的对象转换为数组</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> numbers = &#123;</span><br><span class="line">    *[<span class="built_in">Symbol</span>.iterator]() &#123;</span><br><span class="line">        <span class="keyword">yield</span> <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">yield</span> <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">yield</span> <span class="number">3</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> numbers2 = <span class="built_in">Array</span>.from(numbers, <span class="function">(<span class="params">value</span>) =&gt;</span> value + <span class="number">1</span>);</span><br><span class="line"><span class="built_in">console</span>.log(numbers2)</span><br></pre></td></tr></table></figure>
+
+<h2 id="所有数组上的新方法"><a href="#所有数组上的新方法" class="headerlink" title="所有数组上的新方法"></a>所有数组上的新方法</h2><h3 id="find-与findIndex-方法"><a href="#find-与findIndex-方法" class="headerlink" title="find()与findIndex()方法"></a>find()与findIndex()方法</h3><p>在ES5之前，检索数组是件很麻烦的事，我们只能通过遍历数组来实现一定的检索。ES5增加了indexOf()和lastIndexOf()方法。但是这两个函数只能检索特定的值。</p>
+<p>ES6引入了find()和findIndex()函数使检索更加的灵活。</p>
+<p>find()与findIndex()均接受两个参数。一个回调函数，一个可选值用于指定回调函数执行时内部的this。回调函数接受三个参数：数组的中的当前值、数组当前值的索引以及该数组自身。当给定的元素满足回调函数定义的条件时，回调函数应该返回true。find()和findIndex()均会在回调函数第一次返回true时停止检索，并对应返回匹配的值或匹配的索引。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> numbers = [<span class="number">25</span>,<span class="number">30</span>,<span class="number">35</span>,<span class="number">40</span>,<span class="number">45</span>];</span><br><span class="line"><span class="built_in">console</span>.log(numbers.find(<span class="function"><span class="params">n</span> =&gt;</span> n &gt; <span class="number">33</span>)); <span class="comment">//35</span></span><br><span class="line"><span class="built_in">console</span>.log(numbers.findIndex(<span class="function"><span class="params">n</span> =&gt;</span> n &gt; <span class="number">33</span>)); <span class="comment">//2</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="fill-方法"><a href="#fill-方法" class="headerlink" title="fill()方法"></a>fill()方法</h3><p>fill()方法能使用特定的值填充数组中的一个或多个元素。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">array.fill(num, start, end);</span><br></pre></td></tr></table></figure>
+
+<p>num表示要填充的值，start表示填充的起始位置，end表示填充的结束位置，但不包括在内。</p>
+<p>如果省略start，则从数组最开始处开始填充，如果省略end，则填充的数组结束。</p>
+<p>如果提供的起始位置或结束位置为负数，则实际位置是提供的数加上数组长度。</p>
+<h3 id="copyWithin-方法"><a href="#copyWithin-方法" class="headerlink" title="copyWithin()方法"></a>copyWithin()方法</h3><p>copyWithin()方法从数组内部复制自身元素来填充数组。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">array.copyWithin(填充起始位，复制起始位，复制结束位)</span><br></pre></td></tr></table></figure>
+
+<p>数组从复制起始位开始复制，并对应填充到有填充起始位对应的位中。如果没有复制结束位，则一直填充到数组结束。如果具有复制结束位，则当复制到复制结束位前一位停止复制填充。</p>
+<p>同样的，如果copyWithin的参数为负数，它同样会加上数组长度以获得最终正确的索引位置。</p>
+<h2 id="类型化数组"><a href="#类型化数组" class="headerlink" title="类型化数组"></a>类型化数组</h2><p>类型化数组是具有特殊用途的数组，被设计用来处理数值类型数据。类型化数组的起源可以追溯到WebGL——Open GL ES 2.0的一个接口，设计用于配合网页上的<code>&lt;canvas&gt;</code>标签。类型化数组作为该接口实现的一部分，为JS提供了快速的按位运算能力。</p>
+<p>对于WebGL的需求来说，JS的原生数学运算实在太慢了，因为它使用64位浮点数格式来存储数值，并在必要时将其转换为32位整数。引入类型化数组突破了格式限制并带来了更好的数学运算性能，其基本的设计概念是：单个数值可以被视为由位构成的数组，并且可以对其使用与JS数组现有方法类似的方法。</p>
+<p>ES6采用了类型化数组，将其作为语言的一个正式部分，以确保在JS引擎之间有更好的兼容性，并确保与JS数组有更好的互操作性。</p>
+<h3 id="数值数据类型"><a href="#数值数据类型" class="headerlink" title="数值数据类型"></a>数值数据类型</h3><p>JS使用IEEE 754标准格式存储，使用64位来存储一个数值的浮点数表示形式，该格式在JS中同时用来表示整数与浮点数：当值改变时，可能会频繁发生整数与浮点数之间的格式转换。而类型化数组则允许存储并操作八种不同的数值类型：</p>
+<ul>
+<li>8位有符号整数</li>
+<li>8位无符号整数</li>
+<li>16位有符号整数</li>
+<li>16位无符号整数</li>
+<li>32位有符号整数</li>
+<li>32位无符号整数</li>
+<li>32位浮点数</li>
+<li>64位浮点数</li>
+</ul>
+<h3 id="数组缓冲区"><a href="#数组缓冲区" class="headerlink" title="数组缓冲区"></a>数组缓冲区</h3><p>数组缓冲区是内存中包含一定数量字节的区域，而所有的类型化数组都基于数组缓冲区。床架你数组缓冲区类似于在C语言中使用malloc()来分配内存，而不需要指定这块内存包含什么。</p>
+<p>创建方式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> buffer = <span class="keyword">new</span> <span class="built_in">ArrayBuffer</span>(<span class="number">10</span>); <span class="comment">// 分配了10个字节</span></span><br></pre></td></tr></table></figure>
+
+<p>调用ArrayBuffer构造器时，只需要传入单个数值用于指定缓冲区包含的字节数。创建完毕后可以通过检查对象的byteLength属性来获得缓冲区的字节数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(buffer.byteLength); <span class="comment">//10</span></span><br></pre></td></tr></table></figure>
+
+<p>此外可以使用slice方法来创建要给新的、包含已有缓冲区部分内容的数组缓冲区。这个方法可以使用起始位置与结束位置参数，返回由原缓冲区元素组成的一个新的ArrayBuffer实例，例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> buffer = <span class="keyword">new</span> <span class="built_in">ArrayBuffer</span>(<span class="number">10</span>); </span><br><span class="line"><span class="keyword">let</span> buffer2 = buffer.slice(<span class="number">4</span>,<span class="number">6</span>);</span><br><span class="line"><span class="built_in">console</span>.log(buffer2.btyeLength); <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+
+<p>此代码创建了buffer2数组缓冲区，提取了原缓冲区索引值为4与5的元素，结束参数所对应的元素不会包含在结果中。</p>
+<p>数组缓冲区总是保持创建时指定的字节数，你可以修改其内部的数据，但永远不能修改它的容量。</p>
+<h3 id="使用视图操作数组缓冲区"><a href="#使用视图操作数组缓冲区" class="headerlink" title="使用视图操作数组缓冲区"></a>使用视图操作数组缓冲区</h3><p>数组缓冲区代表一块内存区域，而试图则是你操作这块区域的接口。视图工作在数组缓冲区或其子集上，你可以读写某种数值类型的数据。DateView类型是数组缓冲区的通用视图，允许对前述所有八种数值数据类型进行操作。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> buffer = <span class="keyword">new</span> <span class="built_in">ArrayBuffer</span>(<span class="number">10</span>);</span><br><span class="line"><span class="keyword">let</span> view = <span class="keyword">new</span> <span class="built_in">DataView</span>(buffer, <span class="number">5</span>, <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+
+<p>DataView类型的创建需要一个必须参数-缓冲区对象。此外还有两个可选参数-字节偏移量和所要包含的字节数。如果没有提供这两个参数，则从缓冲区开始到缓冲区结束。</p>
+<h4 id="获取视图信息"><a href="#获取视图信息" class="headerlink" title="获取视图信息"></a>获取视图信息</h4><p>可以通过查询DataView类型对象的一下只读属性来获取试图的信息：</p>
+<ul>
+<li>buffer：该试图所绑定的数组缓冲区</li>
+<li>byteOffset：传给DataView构造器的第二个参数，及字节偏移量，默认值为0</li>
+<li>byteLength：传给DataView构造器的第三个参数，默认值为该缓冲区的byteLength属性</li>
+</ul>
+<h4 id="读取与写入数据"><a href="#读取与写入数据" class="headerlink" title="读取与写入数据"></a>读取与写入数据</h4><p>对于JS所有八种数值数据类型，DataView视图的原型分别提供了在数组缓冲区上写入数据的一个方法和读取数据的一个方法。</p>
+<p>例如操作int8或unint8的读取/写入方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">getInt8(btyeOffset, littleEndian)：从byteOffset处读取一个int8值</span><br><span class="line">setInt8(btyeOffset, value, littleEndian)：从byteOffset处写入一个int8值</span><br><span class="line">getUInt8(btyeOffset, littleEndian)：从byteOffset处读取一个无符号int8值</span><br><span class="line">setUInt8(btyeOffset, value, littleEndian)：从byteOffset处写入一个无符号int8值</span><br></pre></td></tr></table></figure>
+
+<p>littleEndian为一个布尔值，用来决定读写的值是否采用小端序。默认为false，及采用大端序。</p>
+<p>将方法名中的8改成16或32，便可以用来处理16位或32位值。</p>
+<p>而浮点数采用下列读写方法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">getFloat32(byteOffset, littleEndian)：从byteOffset处开始读取一个32位的浮点数；</span><br><span class="line">setFloat32(byteOffset, value, littleEndian)：从byteOffset	处开始写入一个32位的浮点数；</span><br><span class="line">getFloat64(byteOffset, littleEndian)：从byteOffset处开始读取一个64位的浮点数；</span><br><span class="line">setFloat64(byteOffset, value, littleEndian)：从byteOffset处开始写入一个64位的浮点数。</span><br></pre></td></tr></table></figure>
+
+<p>视图允许使用任意格式对任意位置进行读写，而无需考虑这些数据此前是使用什么格式存储的。例如可以向缓冲区写入两个int8值，将其作为一个int16值读取出来。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> buffer = <span class="keyword">new</span> <span class="built_in">ArrayBuffer</span>(<span class="number">2</span>);</span><br><span class="line"><span class="keyword">let</span> view = <span class="keyword">new</span> <span class="built_in">DataView</span>(buffer);</span><br><span class="line">view.setInt8(<span class="number">0</span>, <span class="number">5</span>);</span><br><span class="line">view.setInt8(<span class="number">1</span>, -<span class="number">1</span>);</span><br><span class="line"><span class="built_in">console</span>.log(view.getInt16(<span class="number">0</span>)); <span class="comment">//1535</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="类型化数组即为视图"><a href="#类型化数组即为视图" class="headerlink" title="类型化数组即为视图"></a>类型化数组即为视图</h4><p>ES6的类型化数组实际上就是针对数组缓冲区的特定类型视图，你可以使用这些数组对象来处理特定的数据类型，而不必使用通用的DataView对象</p>
+<p><img src="ES6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B09-%E5%A2%9E%E5%BC%BA%E7%9A%84%E6%95%B0%E7%BB%84%E5%8A%9F%E8%83%BD%5C1.png" alt="1"></p>
+<p>Uint8ClampedArray的特性与Unit8Array基本相同，只是当缓冲区包含的值小于1时，将值转换为0，超过255时，存储255.</p>
+<p>类型化数组只能在特定的一种数据类型上工作，且类型化数组的元素可以使用数值型索引来访问，就像常规数组一样。</p>
+<h4 id="创建特定类型视图"><a href="#创建特定类型视图" class="headerlink" title="创建特定类型视图"></a>创建特定类型视图</h4><p>第一种方式就是使用与创建DataView时相同的参数</p>
+<p>第二种方式就是传递单个数值给类型化数组的构造器，此值表示该数组包含的元素数量。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> ints = <span class="keyword">new</span> <span class="built_in">Int16Array</span>(<span class="number">2</span>),				</span><br><span class="line">	floats = <span class="keyword">new</span> <span class="built_in">Float32Array</span>(<span class="number">5</span>);</span><br><span class="line"><span class="built_in">console</span>.log(ints.byteLength);<span class="comment">//	4 </span></span><br><span class="line"><span class="built_in">console</span>.log(ints.length) <span class="comment">//	2</span></span><br><span class="line"><span class="built_in">console</span>.log(floats.byteLength);<span class="comment">// 20 </span></span><br><span class="line"><span class="built_in">console</span>.log(floats.length); <span class="comment">// 5</span></span><br></pre></td></tr></table></figure>
+
+<p>第三种方式是向构造器传递单个对象参数，可以是下列四种对象之一：</p>
+<ul>
+<li>类型化数组：数组所有元素都会被复制到新的类型化数组中。例如，如果你传递一个int8 类型的数组给Int16Array构造器，这些int8的值会被复制到Int16数组中。新的类型化数组与原先的类型化数组会使用不同的数组缓冲区。 </li>
+<li>可迭代对象：该对象的迭代器会被调用以便将数据插入到类型化数组中。如果其中包含 了不匹配视图类型的值，那么构造器就会抛出错误。 </li>
+<li>数组：该数组的元素会被插入到新的类型化数组中。如果其中包含了不匹配视图类型的 值，那么构造器就会抛出错误。 </li>
+<li>类数组对象：与传入数组的表现一致</li>
+</ul>
+<h2 id="类型化数组与常规数组的相似点"><a href="#类型化数组与常规数组的相似点" class="headerlink" title="类型化数组与常规数组的相似点"></a>类型化数组与常规数组的相似点</h2><h3 id="公共方法"><a href="#公共方法" class="headerlink" title="公共方法"></a>公共方法</h3><p>类型化数组也拥有大量与常规数组等效的方法，你可以对类型化数组使用下列这些方法：</p>
+<ul>
+<li><p>copyWithin()        </p>
+</li>
+<li><p>entries()        </p>
+</li>
+<li><p>fill()        </p>
+</li>
+<li><p>filter()        </p>
+</li>
+<li><p>find()        </p>
+</li>
+<li><p>findIndex()        </p>
+</li>
+<li><p>forEach()        </p>
+</li>
+<li><p>indexOf()        </p>
+</li>
+<li><p>join()        </p>
+</li>
+<li><p>keys()        </p>
+</li>
+<li><p>lastIndexOf()        </p>
+</li>
+<li><p>map()        </p>
+</li>
+<li><p>reduce()        </p>
+</li>
+<li><p>reduceRight()        </p>
+</li>
+<li><p>reverse()    </p>
+</li>
+<li><p>slice()        </p>
+</li>
+<li><p>some()        </p>
+</li>
+<li><p>sort()        </p>
+</li>
+<li><p>values()    </p>
+</li>
+</ul>
+<h3 id="相同的迭代器"><a href="#相同的迭代器" class="headerlink" title="相同的迭代器"></a>相同的迭代器</h3><p>与常规数组相同，类型化数组也拥有三个迭代器，它们是entries()方法、keys()方法与values()方法。这就意味着你可以对类型化数组使用扩展运算符，或者对其使用for-of循环，就像对待常规数组</p>
+<h3 id="of-与from-方法"><a href="#of-与from-方法" class="headerlink" title="of()与from()方法"></a>of()与from()方法</h3><p>最后，所有的类型化数组都包含静态的of()与from()方法，作用类似于Array.of()与Array.from()方法。其中的区别是类型化数组的版本会返回类型化数组，而不返回常规数组。</p>
+<h2 id="类型化数组与常规数组的区别"><a href="#类型化数组与常规数组的区别" class="headerlink" title="类型化数组与常规数组的区别"></a>类型化数组与常规数组的区别</h2><p>二者最重要的区别就是类型化数组并不是常规数组，类型化数组并不是从Array对象派生 的，使用Array.isArray()去检测会返回false        </p>
+<h3 id="行为差异"><a href="#行为差异" class="headerlink" title="行为差异"></a>行为差异</h3><p>常规数组可以被伸展或是收缩，然而类型化数组却会始终保持自身大小不变。你可以对常规数组一个不存在的索引位置进行赋值，但在类型化数组上这么做则会被忽略</p>
+<h3 id="遗漏的方法"><a href="#遗漏的方法" class="headerlink" title="遗漏的方法"></a>遗漏的方法</h3><p>尽管类型化数组拥有常规数组的很多同名方法，但仍然缺少了几个数组方法，包括下列这些：</p>
+<ul>
+<li>concat()        </li>
+<li>pop()        </li>
+<li>push()        </li>
+<li>shift()        </li>
+<li>splice()        </li>
+<li>unshift()    </li>
+</ul>
+<p>除了concat()方法之外，该列表中的其余方法都会改变数组的大小，而由于类型化数组的大小不可变，因此这些方法都不能作用于类型化数组</p>
+<p>concat()方法不可用的原因则是： 连接两个类型化数组的结果是不确定的（特别是当它们处理的数据类型不同时），这种不确定情况原本就不应当使用类型化数组。</p>
+<h3 id="附加的方法"><a href="#附加的方法" class="headerlink" title="附加的方法"></a>附加的方法</h3><p>最后，类型化数组还有两个常规数组所不具备的方法：set()方法与subarray()方法。这 两个方法作用相反：set()方法从另一个数组中复制元素到当前的类型化数组，而subarray()方法则是将当前类型化数组的一部分提取为新的类型化数组。<br>set()方法接受一个数组参数（无论是类型化的还是常规的）、以及一个可选的偏移量参数，后者指示了从什么位置开始插入数据（默认值为0）。数组参数中的数据会被复制到目标类型化数组中，并会确保数据值有效</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2019/12/04/ES6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B09-%E5%A2%9E%E5%BC%BA%E7%9A%84%E6%95%B0%E7%BB%84%E5%8A%9F%E8%83%BD/">ES6学习笔记9--增强的数组功能</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页"></a></p>
+        <p><span>发布时间:</span>2019-12-04, 19:01:50</p>
+        <p><span>最后更新:</span>2020-02-06, 18:23:41</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2019/12/04/ES6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B09-%E5%A2%9E%E5%BC%BA%E7%9A%84%E6%95%B0%E7%BB%84%E5%8A%9F%E8%83%BD/" title="ES6学习笔记9--增强的数组功能">http://doubler.cn/2019/12/04/ES6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B09-%E5%A2%9E%E5%BC%BA%E7%9A%84%E6%95%B0%E7%BB%84%E5%8A%9F%E8%83%BD/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://doubler.cn/2019/12/04/ES6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B09-%E5%A2%9E%E5%BC%BA%E7%9A%84%E6%95%B0%E7%BB%84%E5%8A%9F%E8%83%BD/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2020/01/03/%E9%AB%98%E5%BE%B7%E5%9C%B0%E5%9B%BEAPI%E7%9A%84%E4%BD%BF%E7%94%A8/">
+                    高德地图API的使用
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2019/12/02/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B911/">
+                    秋招复习计划-JavaScript知识点11
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%95%B0%E7%BB%84"><span class="toc-number">1.</span> <span class="toc-text">创建数组</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Array-of-%E6%96%B9%E6%B3%95"><span class="toc-number">1.1.</span> <span class="toc-text">Array.of()方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Array-from-%E6%96%B9%E6%B3%95"><span class="toc-number">1.2.</span> <span class="toc-text">Array.from()方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%98%A0%E5%B0%84%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.2.1.</span> <span class="toc-text">映射转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%A8%E5%8F%AF%E8%BF%AD%E4%BB%A3%E5%AF%B9%E8%B1%A1%E4%B8%8A%E4%BD%BF%E7%94%A8"><span class="toc-number">1.2.2.</span> <span class="toc-text">在可迭代对象上使用</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%80%E6%9C%89%E6%95%B0%E7%BB%84%E4%B8%8A%E7%9A%84%E6%96%B0%E6%96%B9%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">所有数组上的新方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#find-%E4%B8%8EfindIndex-%E6%96%B9%E6%B3%95"><span class="toc-number">2.1.</span> <span class="toc-text">find()与findIndex()方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fill-%E6%96%B9%E6%B3%95"><span class="toc-number">2.2.</span> <span class="toc-text">fill()方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#copyWithin-%E6%96%B9%E6%B3%95"><span class="toc-number">2.3.</span> <span class="toc-text">copyWithin()方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E5%8C%96%E6%95%B0%E7%BB%84"><span class="toc-number">3.</span> <span class="toc-text">类型化数组</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E5%80%BC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">3.1.</span> <span class="toc-text">数值数据类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E7%BC%93%E5%86%B2%E5%8C%BA"><span class="toc-number">3.2.</span> <span class="toc-text">数组缓冲区</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E8%A7%86%E5%9B%BE%E6%93%8D%E4%BD%9C%E6%95%B0%E7%BB%84%E7%BC%93%E5%86%B2%E5%8C%BA"><span class="toc-number">3.3.</span> <span class="toc-text">使用视图操作数组缓冲区</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E8%A7%86%E5%9B%BE%E4%BF%A1%E6%81%AF"><span class="toc-number">3.3.1.</span> <span class="toc-text">获取视图信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%BB%E5%8F%96%E4%B8%8E%E5%86%99%E5%85%A5%E6%95%B0%E6%8D%AE"><span class="toc-number">3.3.2.</span> <span class="toc-text">读取与写入数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E5%8C%96%E6%95%B0%E7%BB%84%E5%8D%B3%E4%B8%BA%E8%A7%86%E5%9B%BE"><span class="toc-number">3.3.3.</span> <span class="toc-text">类型化数组即为视图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E7%89%B9%E5%AE%9A%E7%B1%BB%E5%9E%8B%E8%A7%86%E5%9B%BE"><span class="toc-number">3.3.4.</span> <span class="toc-text">创建特定类型视图</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E5%8C%96%E6%95%B0%E7%BB%84%E4%B8%8E%E5%B8%B8%E8%A7%84%E6%95%B0%E7%BB%84%E7%9A%84%E7%9B%B8%E4%BC%BC%E7%82%B9"><span class="toc-number">4.</span> <span class="toc-text">类型化数组与常规数组的相似点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%AC%E5%85%B1%E6%96%B9%E6%B3%95"><span class="toc-number">4.1.</span> <span class="toc-text">公共方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B8%E5%90%8C%E7%9A%84%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="toc-number">4.2.</span> <span class="toc-text">相同的迭代器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#of-%E4%B8%8Efrom-%E6%96%B9%E6%B3%95"><span class="toc-number">4.3.</span> <span class="toc-text">of()与from()方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E5%8C%96%E6%95%B0%E7%BB%84%E4%B8%8E%E5%B8%B8%E8%A7%84%E6%95%B0%E7%BB%84%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">5.</span> <span class="toc-text">类型化数组与常规数组的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%8C%E4%B8%BA%E5%B7%AE%E5%BC%82"><span class="toc-number">5.1.</span> <span class="toc-text">行为差异</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%81%97%E6%BC%8F%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">5.2.</span> <span class="toc-text">遗漏的方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%99%84%E5%8A%A0%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">5.3.</span> <span class="toc-text">附加的方法</span></a></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"ES6学习笔记9--增强的数组功能　| DoubleR's BLOG　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2020/01/03/%E9%AB%98%E5%BE%B7%E5%9C%B0%E5%9B%BEAPI%E7%9A%84%E4%BD%BF%E7%94%A8/" title="上一篇: 高德地图API的使用">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2019/12/02/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B911/" title="下一篇: 秋招复习计划-JavaScript知识点11">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/06/02/%E7%AE%97%E6%B3%95%E9%A2%988/">算法题8</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/01/Webpack%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E6%A6%82%E5%BF%B5/">Webpack学习笔记-概念</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/10/%E6%98%A5%E6%8B%9B%E7%9A%84%E5%BF%83%E8%B7%AF%E5%8E%86%E7%A8%8B-%E5%AD%97%E8%8A%82%E8%B7%B3%E5%8A%A8%E4%B8%8A%E5%B2%B8/">春招的心路历程-字节跳动上岸</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/25/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-Cookie%E7%9B%B8%E5%85%B3/">秋招复习计划-Cookie相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/23/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/">秋招复习计划-浏览器缓存</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/13/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-%E7%AE%97%E6%B3%95%E9%A2%987/">秋招复习计划-算法题7</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/10/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-ES6%E7%9F%A5%E8%AF%86%E7%82%B92/">秋招复习计划-ES6知识点2</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/10/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-%E6%89%8B%E5%86%99%E4%BB%A3%E7%A0%812/">秋招复习计划-手写代码2</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/29/%E9%98%BF%E9%87%8C%E8%BE%BE%E6%91%A9%E9%99%A2%E8%AE%AD%E7%BB%83%E9%A2%985/">阿里达摩院训练题5</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/28/%E9%98%BF%E9%87%8C%E8%BE%BE%E6%91%A9%E9%99%A2%E8%AE%AD%E7%BB%83%E9%A2%984/">阿里达摩院训练题4</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/27/%E9%98%BF%E9%87%8C%E8%BE%BE%E6%91%A9%E9%99%A2%E8%AE%AD%E7%BB%83%E9%A2%983/">阿里达摩院训练题3</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/26/%E9%98%BF%E9%87%8C%E8%BE%BE%E6%91%A9%E9%99%A2%E8%AE%AD%E7%BB%83%E9%A2%982/">阿里达摩院训练题2</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/25/%E9%98%BF%E9%87%8C%E8%BE%BE%E6%91%A9%E9%99%A2%E8%AE%AD%E7%BB%83%E9%A2%981/">阿里达摩院训练题1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/25/JavaScript%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B011-%E5%80%BC/">JavaScript学习笔记11-值</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/17/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-%E7%AE%97%E6%B3%95%E9%A2%986/">秋招复习计划-算法题6</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/11/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-Vue%E7%9F%A5%E8%AF%86%E7%82%B94/">秋招复习计划-Vue知识点4</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/09/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-Vue%E7%9F%A5%E8%AF%86%E7%82%B93/">秋招复习计划-Vue知识点3</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/06/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-ES6%E7%9F%A5%E8%AF%86%E7%82%B91/">秋招复习计划-ES6知识点1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/01/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-%E6%89%8B%E5%86%99%E4%BB%A3%E7%A0%811/">秋招复习计划-手写代码1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/31/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-Vue%E7%9F%A5%E8%AF%86%E7%82%B92/">秋招复习计划-Vue知识点2</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/26/ES6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B010-Promise%E4%B8%8E%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B/">ES6学习笔记10-Promise与异步编程</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/18/JavaScript%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B010-%E7%B1%BB%E5%9E%8B/">JavaScript学习笔记10-类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/14/%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%8E%86-%E5%AD%97%E8%8A%82%E8%B7%B3%E5%8A%A8%E5%A5%BD%E5%A5%BD%E5%AD%A6%E4%B9%A0%E6%96%B9%E5%90%91/">面试经历-字节跳动好好学习方向</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/10/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-CSS%E7%9F%A5%E8%AF%86%E7%82%B91/">秋招复习计划-CSS知识点1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/09/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9F%A5%E8%AF%86%E7%82%B91/">秋招复习计划-计算机网络知识点1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/08/CSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B03-%E5%9F%BA%E6%9C%AC%E8%A7%86%E8%A7%89%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%92%8C%E7%9B%92%E5%BC%8F%E6%A8%A1%E5%9E%8B/">CSS学习笔记3-基本视觉格式化和盒式模型</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/07/JavaScript%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B09-%E8%A1%8C%E4%B8%BA%E5%A7%94%E6%89%98/">JavaScript学习笔记9-行为委托</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/06/CSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02-%E7%BB%93%E6%9E%84%E5%92%8C%E5%B1%82%E5%8F%A0/">CSS学习笔记2--结构和层叠</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/03/%E9%AB%98%E5%BE%B7%E5%9C%B0%E5%9B%BEAPI%E7%9A%84%E4%BD%BF%E7%94%A8/">高德地图API的使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/04/ES6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B09-%E5%A2%9E%E5%BC%BA%E7%9A%84%E6%95%B0%E7%BB%84%E5%8A%9F%E8%83%BD/">ES6学习笔记9--增强的数组功能</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/02/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B911/">秋招复习计划-JavaScript知识点11</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/01/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B910/">秋招复习计划-JavaScript知识点10</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/29/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-Vue%E7%9F%A5%E8%AF%86%E7%82%B91/">秋招复习计划-Vue知识点1</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/26/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-%E7%AE%97%E6%B3%95%E9%A2%985/">秋招复习计划-算法题5</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/19/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B99/">秋招复习计划-JavaScript知识点9</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/15/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B98/">秋招复习计划-JavaScript知识点8</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/12/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-%E7%AE%97%E6%B3%95%E9%A2%984/">秋招复习计划-算法题4</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/09/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B97/">秋招复习计划-JavaScript知识点7</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/04/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B96/">秋招复习计划--JavaScript知识点6</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/03/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B95/">秋招复习计划-JavaScript知识点5</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/01/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-%E7%AE%97%E6%B3%95%E9%A2%983/">秋招复习计划-算法题3</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/24/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B94/">秋招复习计划-JavaScript知识点4</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/22/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-%E7%AE%97%E6%B3%95%E9%A2%982/">秋招复习计划-算法题2</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/21/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B93/">秋招复习计划-JavaScript知识点3</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/21/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-%E7%AE%97%E6%B3%95%E9%A2%981/">秋招复习计划-算法题1</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/15/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B92/">秋招复习计划-JavaScript知识点2</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/14/ES6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B08--JS%E7%9A%84%E7%B1%BB/">ES6学习笔记8--JS的类</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/14/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-JavaScript%E7%9F%A5%E8%AF%86%E7%82%B91/">秋招复习计划-JavaScript知识点1</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/30/ES6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B07--%E8%BF%AD%E4%BB%A3%E5%99%A8%E4%B8%8E%E7%94%9F%E6%88%90%E5%99%A8/">ES6学习笔记7--迭代器与生成器</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/29/%E6%89%8B%E5%86%99%E7%AD%BE%E5%90%8D%E8%AF%86%E5%88%AB%E9%A1%B9%E7%9B%AE2/">手写签名识别项目2--问题记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/24/%E5%88%A9%E7%94%A8Canvas%E5%AE%9E%E7%8E%B0%E6%89%8B%E5%86%99%E6%9D%BF%E7%9A%84%E6%8F%92%E4%BB%B6/">利用Canvas实现手写板的插件1--touch事件与Canvas的基本使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/24/ES6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B06--Set%E4%B8%8EMap/">ES6学习笔记6--Set与Map</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/24/%E7%A7%8B%E6%8B%9B%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92/">秋招复习计划</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/23/%E6%89%8B%E5%86%99%E7%AD%BE%E5%90%8D%E8%AF%86%E5%88%AB%E9%A1%B9%E7%9B%AE1/">手写签名识别项目1</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/21/ES6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B05--%E7%AC%A6%E5%8F%B7/">ES6学习笔记5--符号</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/18/ES6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B04--%E8%A7%A3%E6%9E%84%E8%B5%8B%E5%80%BC/">ES6学习笔记4--解构赋值</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/16/ES6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B03--%E5%AF%B9%E8%B1%A1/">ES6学习笔记3--对象</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/10/ES6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02--%E5%87%BD%E6%95%B0/">ES6学习笔记2--函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/09/JavaScript%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B08-%E5%8E%9F%E5%9E%8B/">JavaScript学习笔记8--原型</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/09/JavaScript%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B07-%E5%AF%B9%E8%B1%A1/">JavaScript学习笔记7--对象</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/31/JavaScript%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B06--JSON%E4%B8%8EAJAX/">JavaScript学习笔记6--JSON与AJAX</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/31/ES6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B01--%E5%9D%97%E7%BA%A7%E7%BB%91%E5%AE%9A/">ES6学习笔记1--块级绑定</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/29/NodeJs%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B03/">NodeJs学习笔记3</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/28/JavaScript%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B05--this%E5%85%A8%E9%9D%A2%E8%A7%A3%E6%9E%90/">JavaScript学习笔记5--this全面解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/26/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B01/">JavaScript设计模式学习笔记1</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/09/NodeJs%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02/">NodeJs学习笔记2</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/06/NodeJs%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B01/">NodeJs学习笔记1</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/04/JavaScript%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B04--%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%97%AD%E5%8C%85/">JavaScript学习笔记4--提升与作用域闭包</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/03/JavaScript%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B03--%E5%87%BD%E6%95%B0%E4%BD%9C%E7%94%A8%E5%9F%9F%E4%B8%8E%E5%9D%97%E4%BD%9C%E7%94%A8%E5%9F%9F/">JavaScript学习笔记3--函数作用域与块作用域</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/02/JavaScript%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02--%E8%AF%8D%E6%B3%95%E4%BD%9C%E7%94%A8%E5%9F%9F/">JavaScript学习笔记2--词法作用域</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/30/JavaScript%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B01--%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">JavaScript学习笔记1--作用域</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/06/CSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B01-%E9%80%89%E6%8B%A9%E5%99%A8/">CSS学习笔记1--选择器</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2017-2021 Double--R
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+       
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+
+</script>
+<script type="text/javascript" src="/resources/love.js"></script>
+<script type="text/javascript" src="/resources/float.js"></script>
+<script type="text/javascript" src="/resources/typewriter.js"></script>
+<script type="text/javascript" color=0,104,183 opacity=1  zindex=-1 count=50 src="/resources/particle.js"></script>
+  </div>
+</body>
+</html>
